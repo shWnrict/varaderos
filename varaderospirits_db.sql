@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 03, 2023 at 04:11 AM
+-- Generation Time: Aug 04, 2023 at 06:25 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -36,14 +36,6 @@ CREATE TABLE `cart` (
   `date_created` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `cart`
---
-
-INSERT INTO `cart` (`id`, `client_id`, `inventory_id`, `price`, `quantity`, `date_created`) VALUES
-(1, 1, 12, 3200, 1, '2023-08-03 08:47:13'),
-(2, 1, 3, 800, 1, '2023-08-03 09:31:06');
-
 -- --------------------------------------------------------
 
 --
@@ -54,7 +46,6 @@ CREATE TABLE `clients` (
   `id` int(30) NOT NULL,
   `firstname` varchar(250) NOT NULL,
   `lastname` varchar(250) NOT NULL,
-  `gender` varchar(20) NOT NULL,
   `contact` varchar(15) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` text NOT NULL,
@@ -66,8 +57,8 @@ CREATE TABLE `clients` (
 -- Dumping data for table `clients`
 --
 
-INSERT INTO `clients` (`id`, `firstname`, `lastname`, `gender`, `contact`, `email`, `password`, `default_delivery_address`, `date_created`) VALUES
-(1, 'John', 'Smith', 'Male', '09123456789', 'jsmith@sample.com', '4afaf46cc30a9fccaa52e905c3dd1377', 'Sample Address', '0000-00-00 00:00:00');
+INSERT INTO `clients` (`id`, `firstname`, `lastname`, `contact`, `email`, `password`, `default_delivery_address`, `date_created`) VALUES
+(1, 'John', 'Smith', '09123456789', 'jsmith@sample.com', '202cb962ac59075b964b07152d234b70', 'Sample Address', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -81,15 +72,9 @@ CREATE TABLE `completed_orders` (
   `delivery_address` text NOT NULL,
   `payment_method` varchar(100) NOT NULL,
   `amount` float NOT NULL,
+  `status` tinyint(2) NOT NULL,
   `date_completed` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `completed_orders`
---
-
-INSERT INTO `completed_orders` (`id`, `client_id`, `delivery_address`, `payment_method`, `amount`, `date_completed`) VALUES
-(1, 1, 'Address', 'Online', 800, '2023-08-01 08:34:19');
 
 -- --------------------------------------------------------
 
@@ -107,13 +92,6 @@ CREATE TABLE `completed_order_list` (
   `total` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `completed_order_list`
---
-
-INSERT INTO `completed_order_list` (`id`, `order_id`, `product_id`, `size`, `quantity`, `price`, `total`) VALUES
-(1, 1, 1, '1000 ML', 1, 800, 1600);
-
 -- --------------------------------------------------------
 
 --
@@ -122,7 +100,6 @@ INSERT INTO `completed_order_list` (`id`, `order_id`, `product_id`, `size`, `qua
 
 CREATE TABLE `email_acc` (
   `id` int(11) NOT NULL,
-  `username` varchar(30) NOT NULL,
   `email` text NOT NULL,
   `password` text NOT NULL,
   `verification_code` text NOT NULL,
@@ -161,7 +138,7 @@ INSERT INTO `inventory` (`id`, `product_id`, `quantity`, `price`, `size`, `date_
 (9, 3, 10, 3200, '1000 ML', '2023-08-02 23:27:36', 1),
 (10, 4, 10, 3200, '1000 ML', '2023-08-02 23:27:44', 1),
 (11, 5, 10, 3200, '1000 ML', '2023-08-02 23:27:55', 1),
-(12, 6, 0, 3200, '1000 ML', '2023-08-02 23:28:01', 0);
+(12, 6, 10, 3200, '1000 ML', '2023-08-02 23:28:01', 1);
 
 -- --------------------------------------------------------
 
@@ -181,14 +158,6 @@ CREATE TABLE `orders` (
   `date_updated` datetime DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `orders`
---
-
-INSERT INTO `orders` (`id`, `client_id`, `delivery_address`, `payment_method`, `amount`, `status`, `paid`, `date_created`, `date_updated`) VALUES
-(2, 1, 'Address2', 'COD', 2, 0, 0, '2023-08-01 16:42:20', '2023-08-02 23:28:42'),
-(3, 1, 'Address3', 'Online', 3, 3, 1, '2023-08-01 16:44:53', '2023-08-01 16:46:18');
-
 -- --------------------------------------------------------
 
 --
@@ -204,14 +173,6 @@ CREATE TABLE `order_list` (
   `price` double NOT NULL,
   `total` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `order_list`
---
-
-INSERT INTO `order_list` (`id`, `order_id`, `product_id`, `size`, `quantity`, `price`, `total`) VALUES
-(2, 2, 2, '250 ML', 2, 800, 1600),
-(3, 3, 3, '1000 ML', 3, 3200, 9600);
 
 -- --------------------------------------------------------
 
@@ -290,8 +251,9 @@ CREATE TABLE `system_info` (
 INSERT INTO `system_info` (`id`, `meta_field`, `meta_value`) VALUES
 (1, 'name', 'Varadero Spirit Management'),
 (6, 'short_name', 'Varadero Spirit'),
-(11, 'logo', 'uploads/1690356960_varaderospirits-logo.png'),
-(13, 'user_avatar', 'uploads/user_avatar.jpg');
+(11, 'logo', 'uploads/1691061180_1691053740_Modal-logo.png'),
+(13, 'user_avatar', 'uploads/user_avatar.jpg'),
+(15, 'cover', 'uploads/1691070060_website-cover.jpg');
 
 -- --------------------------------------------------------
 
@@ -411,19 +373,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `clients`
 --
 ALTER TABLE `clients`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `completed_orders`
 --
 ALTER TABLE `completed_orders`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `completed_order_list`
@@ -447,13 +409,13 @@ ALTER TABLE `inventory`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `order_list`
 --
 ALTER TABLE `order_list`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `products`
@@ -477,7 +439,7 @@ ALTER TABLE `sizes`
 -- AUTO_INCREMENT for table `system_info`
 --
 ALTER TABLE `system_info`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `users`

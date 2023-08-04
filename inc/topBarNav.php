@@ -1,5 +1,3 @@
-<!-- Navigation Panel -->
-
 <style>
   .navbg {
     background-color: #D72C01;
@@ -63,7 +61,7 @@
         <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                    <!-- Login.php content will be loaded here -->
+                    
                 </div>
             </div>
         </div>
