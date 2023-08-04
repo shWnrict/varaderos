@@ -1,8 +1,4 @@
 <?php require_once('config.php'); ?>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
 
 <style>
     #uni_modal .modal-content>.modal-footer,
@@ -38,16 +34,15 @@
         </div>
     </div>
 </div>
-    </div>
-</div>
 
 <script>
     $(function() {
-        $('#create_account').click(function() {
+        $(document).on('click', '#create_account', function() {
             $('#loginModal .modal-content').load('registration.php', function() {
                 $('#loginModal').modal('show');
             });
         });
+
         $('#login-form').submit(function(e) {
             e.preventDefault();
             start_loader();

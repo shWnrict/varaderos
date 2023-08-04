@@ -48,55 +48,83 @@
                     <input type="password" class="form-control form-control-sm form" name="password" required>
                 </div>
                 <div class="form-group d-flex justify-content-between">
-                    <a href="javascript:void(0)" id="login-show">Already have an Account</a>
-                    <button type="submit" class="btn btn-primary btn-flat">Register</button>
+                    <a href="javascript:void(0)" id="login-show">Already Registered</a>
+                    <button type="button" class="btn btn-primary btn-flat" id="verify-btn">Register</button>
                 </div>
             </div>
         </div>
     </form>
+
+
+</div>
+
+<!-- New Modal for Verification -->
+<div class="modal fade" id="verificationModal" tabindex="-1" role="dialog" aria-labelledby="verificationModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="verificationModalLabel">Verify Your Email Address</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Please enter the verification code that was sent to your email address.</p>
+        <input type="text" class="form-control" id="verification-code" placeholder="Verification Code">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="submit-verification-btn">Verify</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 
 <script>
+$(document).ready(function() {
+  $('#submit-verification-btn').click(function() {
+    var verificationCode = $('#verification-code').val();
+    $.ajax({
+      url: '/verify-email',
+      type: 'POST',
+      data: {
+        verificationCode: verificationCode
+      },
+      success: function(data) {
+        if (data.status === 'success') {
+          $('#verificationModal').modal('hide');
+          alert('Your email address has been verified.');
+        } else {
+          alert(data.msg);
+        }
+      },
+      error: function(error) {
+        console.log(error);
+      }
+    });
+  });
+});   
     $(function() {
         $('#login-show').click(function() {
             $('#loginModal .modal-content').load('login.php', function() {
                 $('#loginModal').modal('show');
             });
         });
-        $('#registration').submit(function(e) {
-            e.preventDefault();
-            start_loader();
-            if ($('.err-msg').length > 0)
-                $('.err-msg').remove();
-            $.ajax({
-                url: _base_url_ + "classes/Master.php?f=register",
-                method: "POST",
-                data: $(this).serialize(),
-                dataType: "json",
-                error: err => {
-                    console.log(err);
-                    alert_toast("An error occurred", 'error');
-                    end_loader();
-                },
-                success: function(resp) {
-                    if (typeof resp === 'object' && resp.status === 'success') {
-                        alert_toast("Account successfully registered", 'success');
-                        setTimeout(function() {
-                            location.reload();
-                        }, 2000);
-                    } else if (resp.status === 'failed' && !!resp.msg) {
-                        var _err_el = $('<div>')
-                        _err_el.addClass("alert alert-danger err-msg").text(resp.msg);
-                        $('[name="password"]').after(_err_el);
-                        end_loader();
-                    } else {
-                        console.log(resp);
-                        alert_toast("An error occurred", 'error');
-                        end_loader();
-                    }
-                }
-            });
-        });
+
+        $('#verify-btn').click(function() {
+        var email = $('[name="email"]').val();
+        if (!validateEmail(email)) {
+            alert_toast("Invalid email address. Please enter a valid email.", 'error');
+            return;
+        }
+        $('#verificationModal').modal('show');
     });
+
+        function validateEmail(email) {
+            var re = /\S+@\S+\.\S+/;
+            return re.test(email);
+        }
+    });
+
 </script>

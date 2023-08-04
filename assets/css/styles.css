@@ -5773,7 +5773,7 @@ fieldset:disabled .btn {
     flex-direction: column;
     width: 100%;
     pointer-events: auto;
-    background-color: #fff;
+    background-color: #343a40;
     background-clip: padding-box;
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 0.3rem;
@@ -10678,7 +10678,7 @@ fieldset:disabled .btn {
 }
 
 .p-size.active {
-    border: 1px solid var(--bs-primary) !important;
+    border: 1px solid #dc3545 !important;
     background: white !important;
     position: relative;
     color: var(--bs-dark) !important;
@@ -10688,12 +10688,12 @@ fieldset:disabled .btn {
     content: "\2713";
     position: absolute;
     bottom: 0;
-    background: var(--bs-primary);
+    background: #dc3545;
     color: white;
     right: 0;
     font-size: 8px;
     font-weight: bolder;
-    border: 2px solid var(--bs-primary);
+    border: 2px solid #000;
 }
 
 button.navbar-toggler {

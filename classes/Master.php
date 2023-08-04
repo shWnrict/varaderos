@@ -151,59 +151,70 @@ Class Master extends DBConnection {
 		return json_encode($resp);
 
 	}
-	function register(){
-    extract($_POST);
-    $data = "";
-    $_POST['password'] = md5($_POST['password']);
-    foreach ($_POST as $k => $v) {
-        if (!in_array($k, array('id'))) {
-            if (!empty($data)) $data .= ",";
-            $data .= " `{$k}`='{$v}' ";
-        }
-    }
-    $email = isset($email) ? trim($email) : '';
 
-    // Validate the email address
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $resp['status'] = 'failed';
-        $resp['msg'] = 'Invalid email address.';
-        return json_encode($resp);
-        exit;
-    }
-
-    $check = $this->conn->query("SELECT * FROM `clients` where `email` = '{$email}' " . (!empty($id) ? " and id != {$id} " : "") . " ")->num_rows;
-    if ($this->capture_err())
-        return $this->capture_err();
-    if ($check > 0) {
-        $resp['status'] = 'failed';
-        $resp['msg'] = "Email already taken.";
-        return json_encode($resp);
-        exit;
-    }
-    if (empty($id)) {
-        $sql = "INSERT INTO `clients` set {$data} ";
-        $save = $this->conn->query($sql);
-        $id = $this->conn->insert_id;
-    } else {
-        $sql = "UPDATE `clients` set {$data} where id = '{$id}' ";
-        $save = $this->conn->query($sql);
-    }
-    if ($save) {
-        $resp['status'] = 'success';
-        if (empty($id))
-            $this->settings->set_flashdata('success', "Account successfully created.");
-        else
-            $this->settings->set_flashdata('success', "Account successfully updated.");
-        foreach ($_POST as $k => $v) {
-            $this->settings->set_userdata($k, $v);
-        }
-        $this->settings->set_userdata('id', $id);
-    } else {
-        $resp['status'] = 'failed';
-        $resp['err'] = $this->conn->error . "[{$sql}]";
-    }
-    return json_encode($resp);
-}
+	function register() {
+		extract($_POST);
+		$data = "";
+		$_POST['password'] = md5($_POST['password']);
+	
+		// Validate the email address
+		if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+			$resp['status'] = 'failed';
+			$resp['msg'] = 'Invalid email address.';
+			return json_encode($resp);
+			exit;
+		}
+	
+		$data = "";
+		foreach ($_POST as $k => $v) {
+			if (!in_array($k, array('id'))) {
+				if (!empty($data)) $data .= ",";
+				$data .= " `{$k}`='{$this->conn->real_escape_string($v)}' ";
+			}
+		}
+	
+		$email = isset($email) ? trim($email) : '';
+	
+		$check = $this->conn->query("SELECT * FROM `clients` where `email` = '{$email}' " . (!empty($id) ? " and id != {$id} " : "") . " ")->num_rows;
+		if ($this->capture_err())
+			return $this->capture_err();
+		if ($check > 0) {
+			$resp['status'] = 'failed';
+			$resp['msg'] = "Email already taken.";
+			return json_encode($resp);
+		}
+		$verification_code = send_verification_code($email);
+		if (empty($id)) {
+			$sql = "INSERT INTO `clients` set {$data}, `verification_code`='{$verification_code}' ";
+			$save = $this->conn->query($sql);
+			$id = $this->conn->insert_id;
+		} else {
+			$sql = "UPDATE `clients` set {$data}, `verification_code`='{$verification_code}' where id = '{$id}' ";
+			$save = $this->conn->query($sql);
+		}
+		if ($save) {
+			$resp['status'] = 'success';
+			if (empty($id))
+				$this->settings->set_flashdata('success', "Account successfully created.");
+			else
+				$this->settings->set_flashdata('success', "Account successfully updated.");
+			$resp['data'] = $id;
+			$resp['verification_code'] = $verification_code;
+		} else {
+			$resp['status'] = 'failed';
+			$resp['err'] = $this->conn->error . "[{$sql}]";
+		}
+		return json_encode($resp);
+	}
+	
+	function send_verification_code($email) {
+		$code = rand(100000, 999999);
+		$subject = "Verification Code";
+		$message = "Your verification code is: $code";
+		$headers = "From: noreply@example.com";
+		mail($email, $subject, $message, $headers);
+		return $code;
+	}
 
 	function add_to_cart(){
 		extract($_POST);
@@ -489,39 +500,6 @@ Class Master extends DBConnection {
 	
 		return json_encode($resp);
 	}	
-
-	function send_verification_code($email) {
-        // Generate a random verification code
-        $verification_code = mt_rand(100000, 999999);
-
-        // Save the verification code to the database along with the email
-        $sql = "UPDATE clients SET verification_code = '{$verification_code}' WHERE email = '{$email}'";
-        $update = $this->conn->query($sql);
-
-        if (!$update) {
-            $resp['status'] = 'failed';
-            $resp['error'] = $this->conn->error;
-            return json_encode($resp);
-        }
-
-        // Send the verification code to the user's email
-        $to = $email;
-        $subject = 'Email Verification Code';
-        $message = 'Your verification code is: ' . $verification_code;
-        $headers = 'From: your_email@example.com'; // Replace with your email address
-
-        $mail_sent = mail($to, $subject, $message, $headers);
-
-        if (!$mail_sent) {
-            $resp['status'] = 'failed';
-            $resp['error'] = 'Failed to send verification code email.';
-            return json_encode($resp);
-        }
-
-        $resp['status'] = 'success';
-        $resp['msg'] = 'Verification code sent to your email.';
-        return json_encode($resp);
-    }
 	
 }
 
