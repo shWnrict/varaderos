@@ -1,4 +1,67 @@
-<?php require_once('config.php'); ?>
+<?php
+require_once('config.php');
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+require 'vendor/autoload.php';
+
+if (isset($_POST["verify-btn"])) {
+    $name = $_POST["firstname"] . " " . $_POST["lastname"];
+    $email = $_POST["email"];
+    $password = $_POST["password"];
+
+    // Generate verification code
+    $verification_code = substr(number_format(time() * rand(), 0, '', ''), 0, 6);
+
+    // Check if email address already exists
+    $query = "SELECT * FROM email_acc WHERE email='$email'";
+    $result = mysqli_query($conn, $query);
+
+    if (mysqli_num_rows($result) > 0) {
+        echo "Email address already exists.";
+    } else {
+        // Send verification email
+        $mail = new PHPMailer(true);
+
+        try {
+            // SMTP configuration
+            $mail->isSMTP();
+            $mail->Host = 'smtp.gmail.com';
+            $mail->SMTPAuth = true;
+            $mail->Username = 'shawnteves8@gmail.com'; // Replace with your Gmail SMTP username
+            $mail->Password = 'mhzxdlyyfdinyotv'; // Replace with your Gmail SMTP password
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port = 587;
+
+            // Set email details
+            $mail->setFrom('shawnteves8@gmail.com', 'Varadero Spirits'); // Replace with your desired FROM name and email
+            $mail->addAddress($email, $name);
+            $mail->isHTML(true);
+            $mail->Subject = 'Email verification';
+            $mail->Body = '<p>Your verification code is: <b style="font-size: 30px;">' . $verification_code . '</b></p>';
+
+            $mail->send();
+        } catch (Exception $e) {
+            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        }
+
+        // Add verification code to database
+        $query = "INSERT INTO email_acc (email, verification_code) VALUES ('$email', '$verification_code')";
+        $result = mysqli_query($conn, $query);
+
+        if ($result) {
+            // Success
+            echo "Verification code sent successfully.";
+        } else {
+            // Error
+            echo "Failed to send verification code.";
+        }
+    }
+}
+
+?>
 
 <style>
     #uni_modal .modal-content>.modal-footer,
@@ -54,57 +117,10 @@
             </div>
         </div>
     </form>
-
-
-</div>
-
-<!-- New Modal for Verification -->
-<div class="modal fade" id="verificationModal" tabindex="-1" role="dialog" aria-labelledby="verificationModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="verificationModalLabel">Verify Your Email Address</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p>Please enter the verification code that was sent to your email address.</p>
-        <input type="text" class="form-control" id="verification-code" placeholder="Verification Code">
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="submit-verification-btn">Verify</button>
-      </div>
-    </div>
-  </div>
 </div>
 
 
 <script>
-$(document).ready(function() {
-  $('#submit-verification-btn').click(function() {
-    var verificationCode = $('#verification-code').val();
-    $.ajax({
-      url: '/verify-email',
-      type: 'POST',
-      data: {
-        verificationCode: verificationCode
-      },
-      success: function(data) {
-        if (data.status === 'success') {
-          $('#verificationModal').modal('hide');
-          alert('Your email address has been verified.');
-        } else {
-          alert(data.msg);
-        }
-      },
-      error: function(error) {
-        console.log(error);
-      }
-    });
-  });
-});   
     $(function() {
         $('#login-show').click(function() {
             $('#loginModal .modal-content').load('login.php', function() {
@@ -118,13 +134,38 @@ $(document).ready(function() {
             alert_toast("Invalid email address. Please enter a valid email.", 'error');
             return;
         }
-        $('#verificationModal').modal('show');
+        $('#loginModal .modal-content').load('verification.php', function() {
+                $('#loginModal').modal('show');
+            });
     });
-
         function validateEmail(email) {
             var re = /\S+@\S+\.\S+/;
             return re.test(email);
         }
-    });
+    $(document).ready(function() {
+        $('#submit-verification-btn').click(function() {
+            var verificationCode = $('#verification-code').val();
+                $.ajax({
+            url: 'verification.php',
+            type: 'POST',
+            data: {
+                email: email,
+                verificationCode: verificationCode
+            },
+            success: function(data) {
+                if (data.status === 'success') {
+                $('#verificationModal').modal('hide');
+                alert('Your email address has been verified.');
+                } else {
+                alert(data.msg);
+                }
+            },
+            error: function(error) {
+                console.log(error);
+            }
+            });
+        });
+    });   
+});
 
 </script>
