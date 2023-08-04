@@ -197,6 +197,12 @@ Class Master extends DBConnection {
 	}
 	function add_to_cart(){
 		extract($_POST);
+		// Check if user is logged in
+		if (!isset($_SESSION['userdata'])) {
+			$resp['status'] = 'failed';
+			$resp['err'] = 'Please login first.';
+			return json_encode($resp);
+		}
 		
 		$data = " client_id = '".$this->settings->userdata('id')."' ";
 		$_POST['price'] = str_replace(",","",$_POST['price']); 
@@ -206,6 +212,7 @@ Class Master extends DBConnection {
 				$data .= " `{$k}`='{$v}' ";
 			}
 		}
+		
 		$check = $this->conn->query("SELECT * FROM `cart` where `inventory_id` = '{$inventory_id}' and client_id = ".$this->settings->userdata('id'))->num_rows;
 		if($this->capture_err())
 			return $this->capture_err();

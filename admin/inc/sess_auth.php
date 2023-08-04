@@ -15,8 +15,8 @@ if(!isset($_SESSION['userdata']) && !strpos($link, 'login.php')){
 if(isset($_SESSION['userdata']) && strpos($link, 'login.php')){
 	redirect('admin/index.php');
 }
-// $module = array('','admin','faculty','student');
-// if(isset($_SESSION['userdata']) && (strpos($link, 'index.php') || strpos($link, 'admin/')) && $_SESSION['userdata']['login_type'] !=  1){
-// 	echo "<script>alert('Access Denied!');location.replace('".base_url.$module[$_SESSION['userdata']['login_type']]."');</script>";
-//     exit;
-// }
+$module = array('','admin','faculty','student');
+if(isset($_SESSION['userdata']) && (strpos($link, 'index.php') || strpos($link, 'admin/')) && $_SESSION['userdata']['login_type'] !=  1){
+	echo "<script>alert('Access Denied!');location.replace('".base_url."');</script>";
+    exit;
+}
