@@ -1,0 +1,320 @@
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+  }
+
+  .modal-content {
+    background-color: black !important;
+    color: #fff;
+    font-family: 'Libre Franklin', sans-serif;
+    border: 1px solid #fff;
+  }
+
+  .modal-header,
+  .modal-footer {
+    border: none;
+  }
+
+  .modal-body {
+    padding: 40px;
+  }
+
+  .btn-primary {
+    margin: 2%;
+    background-color: #D72C01 !important;
+    border-color: #D72C01 !important;
+    width: 50%;
+    padding: 10px;
+    color: #Fff!important;
+  }
+
+  :hover {
+    background-color: #ffffff;
+    color: #D72C01;
+    border-color: #D72C01;
+  }
+
+  .nav-link {
+    color: #000000 !important;
+    padding: 1rem 1rem !important;
+  }
+
+  .modal_logo {
+    width: 30%;
+    margin-bottom: 10px;
+  }
+
+  .highlight {
+    background-color: #D72C01;
+    color: #ffff;
+  }
+
+
+  .navbar {
+    padding: 1%;
+  }
+
+  .smallNav {
+    background-color: #000000;
+    margin-bottom: -13px;
+    background-attachment: fixed;
+  }
+
+  .active {
+    background-color: #D72C01;
+    color: #fff !important;
+    border-radius: 10px;
+  }
+
+  .Varaderos_abstract {
+    background-color: #D72C01;
+    color: #ffff;
+  }
+
+  /* Landing Page */
+
+  .landing-page {
+    background-image: url(../assets/img/Homepage.png);
+    /* Replace 'path-to-your-image.jpg' with the actual path to your background image */
+    background-size: cover;
+    background-position: center;
+    height: 50vh;
+    /* This sets the height of the section to fill the entire viewport height */
+    display: flex;
+    justify-content: end;
+    background-repeat: no-repeat;
+    align-items: end;
+    flex-direction: column;
+    background-attachment: fixed;
+  }
+
+  .shop-button {
+    background-color: #ffffff !important;
+    color: #020202 !important;
+    font-size: 20px;
+    padding: 1%;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 1%;
+    width: 20%;
+  }
+
+  .fa-star {
+    color: rgb(231, 231, 8);
+
+  }
+
+  .titles {
+    margin-bottom: 10%;
+    font-weight: bold;
+  }
+
+  .cont1 {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: right;
+  }
+
+  .cont1 h1 {
+    font-size: 100px;
+  }
+
+  .cont2 img {
+    width: 100%;
+    height: 500px;
+  }
+
+  .cont3 {
+    display: flex;
+    justify-content: end;
+    flex-direction: column;
+    text-align: right;
+  }
+
+  .cont3 h1 {
+    font-size: 100px;
+  }
+
+  .founderCont {
+    color: #fff;
+    height: 90vh;
+    display: flex;
+    justify-content: end;
+    flex-direction: column;
+    text-align: right;
+    background-attachment: fixed;
+    background-image: url(../assets/img/Varadero\ 3.png);
+  }
+
+  .otherCont {
+    width: 100%;
+    height: 90vh;
+  }
+
+  .founderCont1 {
+    color: #fff;
+    height: 60%;
+    display: flex;
+    width: 100%;
+    justify-content: end;
+    flex-direction: column;
+    text-align: right;
+    background-image: url(../assets/img/founder\ 1.png);
+  }
+
+  .NegroniCont {
+    height: 40%;
+    display: flex;
+    width: 100%;
+    color: #Fff;
+    justify-content: end;
+    flex-direction: column;
+    text-align: right;
+    margin-top: 1%;
+    background-image: url(../assets/img/processed.png);
+  }
+
+  #subscribeSec {
+    width: 100%;
+    height: 50vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .email-form {
+    width: 10% !important;
+  }
+
+  .excludeCont h1 {
+    font-size: 5vw;
+    color: #D72C01;
+    font-weight: 600;
+  }
+
+
+  .btn-sub {
+    background-color: #D72C01 !important;
+    color: #fff !important;
+  }
+
+  .input-group {
+    width: 100% !important;
+    display: flex;
+  }
+
+  .footer {
+    background-color: #000000;
+    padding: 30px 0;
+    color: #Fff;
+  }
+
+  .footer .col {
+    text-align: center;
+  }
+
+  .footer .logo {
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .footer .social-icons i {
+    margin: 10px 1px;
+    font-size: 20px;
+  }
+
+  .footer .contact-info i {
+    font-size: 20px;
+  }
+
+  .infoCont a {
+    text-decoration: none;
+    color: #fff;
+  }
+
+  .infoCont li {
+    text-decoration: none;
+    color: #fff;
+    list-style: none;
+  }
+
+  @keyframes floatingAnimation {
+    0% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-20px);
+    }
+
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+  .floating-element {
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: floatingAnimation 2s infinite;
+  }
+
+  /* Additional styles for demonstration purposes */
+  .floating-element {
+    padding: 10px 20px;
+    border-radius: 5px;
+  }
+
+  @media screen and (max-width: 767px) {
+    .btn-search {
+      margin: auto;
+    }
+
+    .landing-page {
+      height: 70vh;
+      background-size: cover;
+      justify-content: end;
+      align-items: center;
+    }
+
+    .founderCont {
+      height: 50vh;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .founderCont h1 {
+      text-align: center !important;
+    }
+
+    .founderCont p {
+      text-align: center !important;
+    }
+
+    .founderCont1 {
+      margin-top: 1%;
+
+    }
+
+    .footer {
+      text-align: center;
+      margin: 10px;
+    }
+
+    .excludeCont h1 {
+      font-size: 50px;
+    }
+
+  }
