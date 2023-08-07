@@ -36,14 +36,14 @@ if (isset($_GET['search'])) {
                     <img data-aos="slide-up" src="./assets/img/Modal-logo.png" alt="Logo" height="100">
                 </a>
             </li>
-            <li class=" nav-item ml-3 ">
+            <!-- <li class=" nav-item ml-3 ">
                 <form class="form-inline">
                     <input id="searchInput" class="form-control mr-sm-2" type="search" placeholder="Search"
                         aria-label="Search">
                     <button class="btn btn-outline-light btn-search btn-md my-2 my-sm-0 " type="button"
                         onclick="performSearch()">Search</button>
                 </form>
-            </li>
+            </li> -->
         </ul>
     </nav>
     <nav class="navbar navbar-expand-lg navbar-light bg-light  shadow">
@@ -79,8 +79,8 @@ if (isset($_GET['search'])) {
 
     <section class="landing-page shadow ">
 
-        <button class=" btn btn-outline-light btn-md shop-button">Shop Now</button>
-        </div>
+        <!-- <button class=" btn btn-outline-light btn-md shop-button">Shop Now</button>
+        </div> -->
 
     </section>
 

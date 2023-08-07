@@ -24,6 +24,11 @@
  margin: 10px;
     width: 100%!important;
 }
+nav a.navbar-brand{
+        color: #fff;
+        font-size: 30px!important;
+        font-weight: 500;
+    }
 </style>
 <nav class="navbar navbar-expand-lg text-light navbg">
     <div class="container px-4 px-lg-5 ">

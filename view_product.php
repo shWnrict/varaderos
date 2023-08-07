@@ -47,9 +47,29 @@ if ($products->num_rows > 0) {
                 </div>
                 <div class="fs-5 mb-5 d-flex justify-content-start">
                     <?php foreach ($inv as $k => $v): ?>
-                        <span><button class="btn btn-sm btn-flat btn-outline-dark m-2 p-size <?php echo $k == 0 ? "active" : '' ?>" data-id="<?php echo $k ?>"><?php echo $v['size'] ?></button></span>
+                        <?php
+                            // Check if the current product's quantity is greater than zero
+                            $isAvailable = $v['quantity'] > 0;
+                            // Add the 'disabled' attribute to the button if the product is out of stock
+                            $disabledAttribute = $isAvailable ? '' : 'disabled';
+                        ?>
+                        <span>
+                            <!-- Add the $disabledAttribute to the button -->
+                            <button class="btn btn-sm btn-flat btn-outline-dark m-2 p-size <?php echo $k == 0 ? "active" : '' ?>" data-id="<?php echo $k ?>" <?php echo $disabledAttribute ?>><?php echo $v['size'] ?></button>
+                        </span>
                     <?php endforeach; ?>
                 </div>
+                <div class="fs-5 mb-5">
+                    &#8369; <span id="price"><?php echo $inv[0]['price'] ?></span>
+                    <br>
+                    <!-- Display a message for out of stock products -->
+                    <?php if ($inv[0]['quantity'] > 0): ?>
+                        <span><small><b>Available stock:</b> <span id="avail"><?php echo $inv[0]['quantity'] ?></span></small></span>
+                    <?php else: ?>
+                        <span><small><b>Out of stock</b></small></span>
+                    <?php endif; ?>
+                </div>
+
                 <form action="" id="add-cart">
                     <div class="d-flex">
                         <input type="hidden" name="price" value="<?php echo $inv[0]['price'] ?>">
