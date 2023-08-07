@@ -29,7 +29,7 @@
     <div class="container px-4 px-lg-5 ">
         <button class="navbar-toggler btn btn-" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"> <i class="fas fa-bars"></i></span></button>
         <a class="navbar-brand" href="./">
-            <img src="<?php echo validate_image($_settings->info('logo')) ?>" width="100" height="50" class="d-inline-block align-top" alt="" loading="lazy">
+            <img src="<?php echo validate_image($_settings->info('logo')) ?>" width="80" height="50" class="d-inline-block align-top" alt="" loading="lazy">
             <?php echo $_settings->info('short_name') ?>
         </a>
 
@@ -66,7 +66,7 @@
                         </span>
                     </a>
 
-                    <a href="./my_account.php" class="text-light  nav-link"><b> Hi, <?php echo $_settings->userdata('firstname') ?>!</b></a>
+                    <a href="./my_account.php" class="text-light  nav-link"><b> Hi <?php echo $_settings->userdata('firstname') ?>!</b></a>
                     <a href="logout.php" class="text-light nav-link"><i class="fa fa-sign-out-alt"></i></a>
                 <?php endif; ?>
             </div>

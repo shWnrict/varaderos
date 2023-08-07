@@ -61,7 +61,7 @@ if (isset($_GET['search'])) {
         <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link active" href="HomePage.html">Home</a>
+                    <a class="nav-link active" href="HomePage.php">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="about.php">About Us</a>

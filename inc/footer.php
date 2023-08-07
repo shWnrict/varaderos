@@ -67,7 +67,7 @@
 <!-- Footer-->
 <footer class="py-5 footerbg">
             <div class="container">
-              <p class="m-0 text-center text-white">Copyright &copy; <?php echo $_settings->info('short_name') ?> 2021</p>
+              <p class="m-0 text-center text-white">Copyright &copy; <?php echo $_settings->info('short_name') ?></p>
               <p class="m-0 text-center text-white">Developed By: Interns</a></p>
           </div>
         </footer>

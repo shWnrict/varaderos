@@ -19,7 +19,7 @@ if($email != false && $password != false){
         }
     }
 }else{
-    header('Location: login-user.php');
+    header('Location: HomePage.php');
 }
 ?>
 <?php
@@ -108,9 +108,19 @@ ob_end_flush();
         font-weight: 600;
     }
     </style>
+<script>
+    // JavaScript function to redirect after 3 seconds
+    function redirectToAnotherPage() {
+      setTimeout(function() {
+        window.location.href = 'edit_account.php';
+      }, 5000); // 3000 milliseconds = 3 seconds
+    }
+</script>
+
 </head>
-<body>
-    <h1>Your Account is verified.</h1>
+<body onload="redirectToAnotherPage()">
+    <h1>Your Account is verified. Login first, then edit your account</h1>
+    <h2>Redirecting in 5 seconds...</h2>
 </body>
 </html>
 <?php require_once('inc/header.php') ?>

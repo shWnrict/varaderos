@@ -93,6 +93,8 @@ if(isset($_POST['signup'])){
                         $data_check = mysqli_query($con, $insert_data);
                 $_SESSION['email'] = $email;
                 header('location: verified.php');
+                
+                // echo '<script>window.location.href = "verified.php?showModal=true";</script>';
                 exit();
             }else{
                 $errors['otp-error'] = "Failed while updating code!";
