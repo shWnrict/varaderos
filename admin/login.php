@@ -2,13 +2,30 @@
 <!DOCTYPE html>
 <html lang="en" class="" style="height: auto;">
  <?php require_once('inc/header.php') ?>
-<body class="hold-transition login-page  dark-mode">
+<body class="hold-transition login-page ">
   <script>
     start_loader()
   </script>
+  <style>
+  .card-primarys {
+      background-color: #D72C01;
+      color: #fff;
+    }
+    button {
+      background-color: #D72C01!important;
+      color: #fff;
+    }
+    button:hover{
+     color: #D72C01!important;
+     background-color: #fff!important;
+    }
+    .websitedirect {
+      text-decoration: underline;
+    }
+  </style>
 <div class="login-box">
   <!-- /.login-logo -->
-  <div class="card card-outline card-primary">
+  <div class="card card-primarys">
     <div class="card-header text-center">
       <a href="./" class="h1"><b>Admin Login</b></a>
     </div>
@@ -34,7 +51,7 @@
         </div>
         <div class="row">
           <div class="col-8">
-            <a href="<?php echo base_url ?>">Go to Website</a>
+            <a  class="websitedirect"href="<?php echo base_url ?>">Go to Website</a>
           </div>
           <!-- /.col -->
           <div class="col-4">

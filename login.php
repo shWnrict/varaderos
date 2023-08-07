@@ -5,9 +5,16 @@
     #uni_modal .modal-content>.modal-header {
         display: none;
     }
+
+    .modal-login {
+      display: inline!important;
+      background-color:#fff; 
+      color: #D72C01 ;
+      border-radius: 10px;
+    }
 </style>
 
-<div class="container-fluid">
+<div class="container-fluid modal-login">
     <div class="row">
         <h3 class="float-right">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">

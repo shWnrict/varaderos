@@ -13,7 +13,14 @@
 
   .modal-content {
     background-color: black !important;
-    color: #fff;
+    color: #fff!important;
+    font-family: 'Libre Franklin', sans-serif;
+    border: 1px solid #fff;
+  }
+
+  .modal-content:hover {
+    background-color: black !important;
+    color: #fff!important;
     font-family: 'Libre Franklin', sans-serif;
     border: 1px solid #fff;
   }
@@ -36,11 +43,6 @@
     color: #Fff!important;
   }
 
-  :hover {
-    background-color: #ffffff;
-    color: #D72C01;
-    border-color: #D72C01;
-  }
 
   .nav-link {
     color: #000000 !important;

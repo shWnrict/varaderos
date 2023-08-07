@@ -1,3 +1,8 @@
+<head>
+  <!-- Other meta tags and stylesheets -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+
 <style>
   .navbg {
     background-color: #D72C01;
@@ -9,10 +14,20 @@
   #login-btn {
     color: #Fff;
   }
+
+.navbar-toggler {
+  color: #FFF!important;
+  border: 1px solid #fff!important;
+}
+#search-form {
+ border: 1px solid #fff;
+ margin: 10px;
+    width: 100%!important;
+}
 </style>
 <nav class="navbar navbar-expand-lg text-light navbg">
     <div class="container px-4 px-lg-5 ">
-        <button class="navbar-toggler btn btn-sm" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <button class="navbar-toggler btn btn-" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"> <i class="fas fa-bars"></i></span></button>
         <a class="navbar-brand" href="./">
             <img src="<?php echo validate_image($_settings->info('logo')) ?>" width="100" height="50" class="d-inline-block align-top" alt="" loading="lazy">
             <?php echo $_settings->info('short_name') ?>
