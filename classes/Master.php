@@ -337,16 +337,66 @@ Class Master extends DBConnection {
 	}
 	function update_order_status(){
 		extract($_POST);
-		$update = $this->conn->query("UPDATE `orders` set `status` = '$status' where id = '{$id}' ");
+		$order = $this->conn->query("SELECT status FROM `orders` WHERE id = '{$id}' ");
+		if ($order->num_rows > 0) {
+			$order_data = $order->fetch_assoc();
+			$current_status = $order_data['status'];
+		}
+	
+		$update = $this->conn->query("UPDATE `orders` SET `status` = '$status' WHERE id = '{$id}' ");
 		if($update){
-			$resp['status'] ='success';
-			$this->settings->set_flashdata("success"," Order status successfully updated.");
-		}else{
-			$resp['status'] ='failed';
-			$resp['err'] =$this->conn->error;
+			if (($current_status == 1 || $current_status == 2) && $status == 4) {
+				$this->add_inventory($id);
+			} elseif ($current_status == 4 && ($status == 1 || $status == 2)) {
+				// Do nothing when status changes from Cancelled (4) to Packed (1) or Out for Delivery (2)
+			} elseif ($status == 1) {
+				$this->deduct_inventory($id);
+			}
+			$resp['status'] = 'success';
+			$this->settings->set_flashdata("success", "Order status successfully updated.");
+		} else {
+			$resp['status'] = 'failed';
+			$resp['err'] = $this->conn->error;
 		}
 		return json_encode($resp);
 	}
+	function deduct_inventory($order_id){
+		// Retrieve all products in the order list
+		$order_list = $this->conn->query("SELECT * FROM `order_list` WHERE order_id = '{$order_id}' ");
+		if ($order_list->num_rows > 0) {
+			while ($order_data = $order_list->fetch_assoc()) {
+				$product_id = $order_data['product_id'];
+				$quantity = $order_data['quantity'];
+				$size = $order_data['size'];
+	
+				// Deduct the quantity from the 'inventory' table based on the product_id, quantity, and size
+				$inventory_update = $this->conn->query("UPDATE `inventory` SET `quantity` = `quantity` - '{$quantity}' WHERE `product_id` = '{$product_id}' AND `size` = '{$size}' ");
+				if (!$inventory_update) {
+					// Error updating inventory, handle accordingly
+					$this->conn->error;
+				}
+			}
+		}
+	}	
+	function add_inventory($order_id){
+		// Retrieve all products in the order list
+		$order_list = $this->conn->query("SELECT * FROM `order_list` WHERE order_id = '{$order_id}' ");
+		if ($order_list->num_rows > 0) {
+			while ($order_data = $order_list->fetch_assoc()) {
+				$product_id = $order_data['product_id'];
+				$quantity = $order_data['quantity'];
+				$size = $order_data['size'];
+	
+				// Add the quantity back to the 'inventory' table based on the product_id, quantity, and size
+				$inventory_update = $this->conn->query("UPDATE `inventory` SET `quantity` = `quantity` + '{$quantity}' WHERE `product_id` = '{$product_id}' AND `size` = '{$size}' ");
+				if (!$inventory_update) {
+					// Error updating inventory, handle accordingly
+					$this->conn->error;
+				}
+			}
+		}
+	}
+	
 	function pay_order(){
 		extract($_POST);
 		$update = $this->conn->query("UPDATE `orders` set `paid` = '1' where id = '{$id}' ");

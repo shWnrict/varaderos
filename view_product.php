@@ -40,11 +40,22 @@ if ($products->num_rows > 0) {
             </div>
             <div class="col-md-6">
                 <h1 class="display-5 fw-bolder"><?php echo $product_name ?></h1>
-                <div class="fs-5 mb-5">
+                <!-- <div class="fs-5 mb-5">
                     &#8369; <span id="price"><?php echo $inv[0]['price'] ?></span>
                     <br>
                     <span><small><b>Available stock:</b> <span id="avail"><?php echo $inv[0]['quantity'] ?></span></small></span>
+                </div> -->
+                <div class="fs-5 mb-5">
+                    &#8369; <span id="price"><?php echo $inv[0]['price'] ?></span>
+                    <br>
+                    <!-- Display a message for out of stock products -->
+                    <?php if ($inv[0]['quantity'] > 0): ?>
+                        <span><small><b>Available stock:</b> <span id="avail"><?php echo $inv[0]['quantity'] ?></span></small></span>
+                    <?php else: ?>
+                        <span><small><b>Out of stock</b></small></span>
+                    <?php endif; ?>
                 </div>
+                
                 <div class="fs-5 mb-5 d-flex justify-content-start">
                     <?php foreach ($inv as $k => $v): ?>
                         <?php
@@ -59,16 +70,7 @@ if ($products->num_rows > 0) {
                         </span>
                     <?php endforeach; ?>
                 </div>
-                <div class="fs-5 mb-5">
-                    &#8369; <span id="price"><?php echo $inv[0]['price'] ?></span>
-                    <br>
-                    <!-- Display a message for out of stock products -->
-                    <?php if ($inv[0]['quantity'] > 0): ?>
-                        <span><small><b>Available stock:</b> <span id="avail"><?php echo $inv[0]['quantity'] ?></span></small></span>
-                    <?php else: ?>
-                        <span><small><b>Out of stock</b></small></span>
-                    <?php endif; ?>
-                </div>
+                
 
                 <form action="" id="add-cart">
                     <div class="d-flex">
