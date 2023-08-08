@@ -50,13 +50,13 @@ if (isset($_GET['id']) && $_GET['id'] > 0) {
 				<label for="price" class="control-label">Price</label>
                 <input type="number" step="any" class="form-control form" required name="price" value="<?php echo isset($price) ? $price : '' ?>">
             </div>
-			<div class="form-group">
+			<!-- <div class="form-group">
 				<label for="status" class="control-label">Status</label>
                 <select name="status" id="status" class="custom-select selevt">
-                <option value="1" <?php echo isset($status) && $status == 1 ? 'selected' : '' ?>>Active</option>
-                <option value="0" <?php echo isset($status) && $status == 0 ? 'selected' : '' ?>>Inactive</option>
+                <option value="1" <?php echo isset($status) && $status == 1 ? 'selected' : '' ?>>In Stock</option>
+                <option value="0" <?php echo isset($status) && $status == 0 ? 'selected' : '' ?>>Out of Stock</option>
                 </select>
-			</div>
+			</div> -->
 		</form>
 	</div>
 	<div class="card-footer">

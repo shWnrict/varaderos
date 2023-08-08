@@ -112,7 +112,7 @@ $(function(){
                 if(!!resp.status && resp.status == 'success'){
                     alert_toast("Order Successfully placed.","success")
                     setTimeout(function(){
-                        location.replace('./HomePage.php')
+                        location.replace('./my_account.php')
                     },2000)
                 }else{
                     console.log(resp)

@@ -28,7 +28,7 @@ if ($products->num_rows > 0) {
         <div class="row gx-4 gx-lg-5 align-items-center">
             <div class="col-md-6">
                 <img class="card-img-top mb-5 mb-md-0" loading="lazy" id="display-img" src="<?php echo validate_image($img) ?>" alt="..." />
-                <div class="mt-2 row gx-2 gx-lg-3 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-start">
+                <!-- <div class="mt-2 row gx-2 gx-lg-3 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-start">
                     <?php 
                     foreach ($fileO as $k => $img):
                         if (in_array($img, array('.', '..')))
@@ -36,7 +36,7 @@ if ($products->num_rows > 0) {
                     ?>
                         <a href="javascript:void(0)" class="view-image <?php echo $k == 2 ? "active" : '' ?>"><img src="<?php echo validate_image('uploads/product_' . $id . '/' . $img) ?>" loading="lazy" class="img-thumbnail" alt=""></a>
                     <?php endforeach; ?>
-                </div>
+                </div> -->
             </div>
             <div class="col-md-6">
                 <h1 class="display-5 fw-bolder"><?php echo $product_name ?></h1>
@@ -76,7 +76,9 @@ if ($products->num_rows > 0) {
                     <div class="d-flex">
                         <input type="hidden" name="price" value="<?php echo $inv[0]['price'] ?>">
                         <input type="hidden" name="inventory_id" value="<?php echo $inv[0]['id'] ?>">
-                        <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem" name="quantity" />
+                        <!-- <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem" name="quantity" /> -->
+                        <input class="form-control text-center me-3" id="inputQuantity" type="number" value="1" style="max-width: 3rem" name="quantity" oninput="limitMaxQuantity()" />
+
                         <button class="btn btn-outline-dark flex-shrink-0" type="submit">
                             <i class="bi-cart-fill me-1"></i>
                             Add to cart
@@ -93,6 +95,14 @@ if ($products->num_rows > 0) {
 
 <script>
     var inv = $.parseJSON('<?php echo json_encode($inv) ?>');
+    function limitMaxQuantity() {
+    const inputQuantity = document.getElementById('inputQuantity');
+    const availStock = <?php echo $inv[0]['quantity']; ?>;
+    
+    if (inputQuantity.value > availStock) {
+        inputQuantity.value = availStock; // Set the input value to the available stock if it exceeds the limit
+    }
+}
     $(function(){
         $('.view-image').click(function(){
             var _img = $(this).find('img').attr('src');

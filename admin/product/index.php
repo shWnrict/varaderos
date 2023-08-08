@@ -19,7 +19,7 @@
 					<col width="15%">
 					<col width="20%">
 					<col width="35%">
-					<!-- <col width="10%"> -->
+					<col width="10%">
 					<col width="15%">
 				</colgroup>
 				<thead>
@@ -28,7 +28,7 @@
 						<th>Date Created</th>
 						<th>Product</th>
 						<th>Description</th>
-						<!-- <th>Status</th> -->
+						<th>Display</th>
 						<th>Action</th>
 					</tr>
 				</thead>
@@ -45,13 +45,13 @@
 							<td><?php echo $row['product_name'] ?></td>
 							<td ><p class="truncate-1 m-0"><?php echo $row['description'] ?></p></td>
 							
-							<!-- <td class="text-center">
+							<td class="text-center">
                                 <?php if($row['status'] == 1): ?>
-                                    <span class="badge badge-success">Active</span>
+                                    <span class="badge badge-success">Show</span>
                                 <?php else: ?>
-                                    <span class="badge badge-danger">Inactive</span>
+                                    <span class="badge badge-danger">Hide</span>
                                 <?php endif; ?>
-                            </td> -->
+                            </td>
 
 							<td align="center">
 								 <button type="button" class="btn btn-flat btn-default btn-sm dropdown-toggle dropdown-icon" data-toggle="dropdown">

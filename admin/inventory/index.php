@@ -60,9 +60,9 @@
                                 <td class="text-right"><?php echo $row['quantity'] ?></td>
                                 <td class="text-center">
                                     <?php if($status == 1): ?>
-                                        <span class="badge badge-success">Active</span>
+                                        <span class="badge badge-success">In Stock</span>
                                     <?php else: ?>
-                                        <span class="badge badge-danger">Inactive</span>
+                                        <span class="badge badge-danger">Out of Stock</span>
                                     <?php endif; ?>
                                 </td>
                                 <td align="center">

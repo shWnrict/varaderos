@@ -317,6 +317,8 @@ Class Master extends DBConnection {
 			if($this->capture_err())
 				return $this->capture_err();
 			if($save_olist){
+				$this->deduct_inventory($order_id);
+
 				$empty_cart = $this->conn->query("DELETE FROM `cart` WHERE client_id = '{$client_id}'");
 				$data = " order_id = '{$order_id}'";
 				$data .= " ,total_amount = '{$amount}'";
@@ -345,7 +347,7 @@ Class Master extends DBConnection {
 	
 		$update = $this->conn->query("UPDATE `orders` SET `status` = '$status' WHERE id = '{$id}' ");
 		if($update){
-			if (($current_status == 1 || $current_status == 2) && $status == 4) {
+			if (($current_status == 1 || $current_status == 2 || $current_status == 0) && $status == 4) {
 				$this->add_inventory($id);
 			} elseif ($current_status == 4 && ($status == 1 || $status == 2)) {
 				// Do nothing when status changes from Cancelled (4) to Packed (1) or Out for Delivery (2)
@@ -396,7 +398,6 @@ Class Master extends DBConnection {
 			}
 		}
 	}
-	
 	function pay_order(){
 		extract($_POST);
 		$update = $this->conn->query("UPDATE `orders` set `paid` = '1' where id = '{$id}' ");

@@ -23,13 +23,13 @@ if (isset($_GET['id']) && $_GET['id'] > 0) {
                 <label for="description" class="control-label">Description</label>
                 <textarea name="description" id="" cols="30" rows="2" class="form-control form no-resize summernote"><?php echo isset($description) ? $description : ''; ?></textarea>
             </div>
-            <!-- <div class="form-group">
-                <label for="status" class="control-label">Status</label>
+            <div class="form-group">
+                <label for="status" class="control-label">Display</label>
                 <select name="status" id="status" class="custom-select select">
-                    <option value="1" <?php echo isset($status) && $status == 1 ? 'selected' : '' ?>>Active</option>
-                    <option value="0" <?php echo isset($status) && $status == 0 ? 'selected' : '' ?>>Inactive</option>
+                    <option value="1" <?php echo isset($status) && $status == 1 ? 'selected' : '' ?>>Show</option>
+                    <option value="0" <?php echo isset($status) && $status == 0 ? 'selected' : '' ?>>Hide</option>
                 </select>
-            </div> -->
+            </div>
             <div class="form-group">
                 <label for="" class="control-label">Images</label>
                 <div class="custom-file">

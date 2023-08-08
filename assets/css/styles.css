@@ -10668,7 +10668,7 @@ fieldset:disabled .btn {
 
 .view-image>img {
     height: 130px;
-    width: 100%;
+    width: 50%;
     object-fit: cover;
     border: 1px solid #64656740;
 }
